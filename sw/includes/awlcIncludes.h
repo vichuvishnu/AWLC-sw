@@ -1,10 +1,12 @@
 #ifndef __AWLC_INCLUDES_H__
 #define __AWLC_INCLUDES_H__
 
-#include <awlcTypes.h>
+#include "awlcTypes.h"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define 	AWLC_SUCCESS					0
 #define 	AWLC_FAILURE					-1
