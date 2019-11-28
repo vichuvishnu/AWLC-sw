@@ -1,5 +1,5 @@
 /**
- * awlcLCDModules.c
+ * awlcSensorModules.h
  * 
  * Copyright 2019 Vishnu Bhaskar <vishnu.bhaskar.996@outlook.com>
  * 
@@ -21,32 +21,7 @@
  * 
  */
  
-#include "awlcLCDModules.h"
+#ifndef _AWLC_SENSOR_MODULES_H_
+#define	_AWLC_SENSOR_MODULES_H_
 
-SINT32 awlcLcdPrint
-(
-	UINT8 u8MsgType,
-	UINT8 u8MsgId
-)
-{
-	UINT8 u8Msg[AWLC_LCD_DISPLAY_ROW_MAX_LENGTH];
-	switch(u8MsgType)
-	{
-		case eAWLC_ALERT_MSG:
-		{
-			sprintf(u8Msg,"%s%s",AWLC_ALERT_MSG_TAG,"haiii");
-		}
-		break;
-		case eAWLC_STATUS_MSG:
-		{
-		}
-		break;
-		case eAWLC_TANK_LEVEL_MSG:
-		{
-		}
-		break;
-		default:
-			printf("Error msg");
-		break;
-	}
-}
+#endif

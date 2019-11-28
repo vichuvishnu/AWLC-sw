@@ -29,23 +29,30 @@
  *====================
  **/
 
-#include "../includes/awlcIncludes.h"
-
+#include <awlcIncludes.h>
  
  /**
  *====================
  * Defines
  *====================
  **/
+#define 	AWLC_DEBUG_PRINT_ENABLE
 #define 	AWLC_LCD_DISPLAY_ROW_MAX_LENGTH				16
 #define		AWLC_LCD_DISPLAY_COLUMN_MAX_LENGTH			2
 #define		AWLC_LCD_DISPLAY_MSG_MAX_LENGTH				12
 #define		AWLC_LCD_DISPLAY_TANK_LEVEL_MAX_LENGTH		10
-#define 	AWLC_LDC_ALRT_MSG_LENTH						AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
-#define 	AWLC_LDC_STATUS_MSG_LENTH					AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
+#define 	AWLC_LDC_ALRT_MSG_LENGTH					AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
+#define 	AWLC_LDC_STATUS_MSG_LENGTH					AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
+#define 	AWLC_LDC_MSG_POSITION						AWLC_LCD_DISPLAY_ROW_MAX_LENGTH - AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
 #define		AWLC_ALERT_MSG_TAG							"ALT:"
 #define		AWLC_STATUS_MSG_TAG 						"MSG:"
 #define		AWLC_TANK_LEVEL_TAG							"LEVEL:"
+
+#define		AWLC_SERIAL_PRINT_BUF_MAX   				1024
+//#define		AWLC_SERIAL_MAX_FILE_NAME_LEN					10
+//#define		AWLC_SERIAL_MAX_API_NAME_LEN					10
+//#define		AWLC_SERIAL_MAX_LINE_LEN						6
+#define		AWLC_BAUD_RATE								9600
 
 
 /**
@@ -90,21 +97,29 @@ typedef enum AWLC_MESSAGE_TYPE {
 	eAWLC_TANK_LEVEL_MSG
 }AWLC_EN_LCD_MESSAGE_TYPES;
 
-const char * awlcLcdMessages[eAWLC_LCD_MSG_TOTAL] = {"","EMPTY TANK","MOTOR ON","MOTOR OFF","DRY RUN"} ;
+
+const char * const astrLogLevelNameMap[] = {AWLC_LCD_MSG_ID};
+#define awlcLogLevelName(id) astrLogLevelNameMap[id]
+
 /**
  *======================
  * Structure 
  *======================
  **/
- 
+
  
  /**
  *======================
  * Function Declaration
  *======================
  */
-  SINT32 awlcLcdPrint(UINT8 u8MsgType,UINT8 u8MsgId);
-  SINT32 awlcLcdDisplayAlert();
-  SINT32 awlcLcdDisplayMsg();
-  SINT32 awlcLcdDisplayTankLevel();
+VOID awlcLcdInit();
+SINT32 awlcLcdPrint(UINT8 u8MsgType,UINT8 u8MsgId);
+SINT32 awlcLcdDisplayAlert();
+SINT32 awlcLcdDisplayMsg();
+SINT32 awlcLcdDisplayTankLevel();
+SINT32 awlcStatusLedBlink();
+VOID awlcSerialPrintInit();
+void awlcPrintf(const char	* ps8Fmt,...);
+
 #endif
