@@ -1,5 +1,5 @@
 /**
- * awlcSensorModules.h
+ * awlcMotorModules.cpp
  * 
  * Copyright 2019 Vishnu Bhaskar <vishnu.bhaskar.996@outlook.com>
  * 
@@ -20,8 +20,13 @@
  * 
  * 
  */
- 
-#ifndef _AWLC_SENSOR_MODULES_H_
-#define	_AWLC_SENSOR_MODULES_H_
+#include <awlcMotorModules.h>
 
-#endif
+void awlcMotorInit()
+{
+	awlcPrintf("===========================");
+	awlcPrintf(" Motor Module Initializing");
+	awlcPrintf("===========================");
+	pinMode(AWLC_MOTOR_TRIGGER_PIN, OUTPUT);
+	awlcPrintf("PIN : [%d] Direction : [%d]",AWLC_MOTOR_TRIGGER_PIN,OUTPUT);
+}

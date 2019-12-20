@@ -1,5 +1,5 @@
 /**
- * awlcLCDModules.cpp
+ * awlcMotorModules.cpp
  * 
  * Copyright 2019 Vishnu Bhaskar <vishnu.bhaskar.996@outlook.com>
  * 
@@ -21,22 +21,19 @@
  * 
  */
  
-#include <awlcLCDModules.h>
-
+ #include <awlcIncludes.h>
+ 
 UINT8 gu8StatusLedBlink;
-const char * awlcLcdMessages[eAWLC_LCD_MSG_TOTAL] = {"","EMPTY TANK","MOTOR ON","MOTOR OFF","DRY RUN"} ;
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE );
-void awlcSerialPrintInit()
+ 
+ void awlcSerialPrintInit()
 {
 	Serial.begin(AWLC_BAUD_RATE);
 }
 
-VOID awlcLcdInit()
+void awlcStatusLedInit()
 {
-	pinMode(LED_BUILTIN, OUTPUT);
-	lcd.begin(16,2);
+	pinMode(AWLC_STATUS_LED_PIN, OUTPUT);
 }
-
 void	awlcPrintf
 (
 	const char	* ps8Fmt,
@@ -56,42 +53,13 @@ void	awlcPrintf
 
 SINT32 awlcStatusLedBlink()
 {
+  //awlcPrintf("LED [%d]",gu8StatusLedBlink);
   if(gu8StatusLedBlink == 1) {
     gu8StatusLedBlink=0;
-    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(AWLC_STATUS_LED_PIN, HIGH);
   } else if (gu8StatusLedBlink == 0) {
     gu8StatusLedBlink=1;
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(AWLC_STATUS_LED_PIN, LOW);
   }
   return AWLC_SUCCESS;
-}
-
-SINT32 awlcLcdPrint
-(
-	UINT8 u8MsgType,
-	UINT8 u8MsgId
-)
-{
-	UINT8 u8Msg[AWLC_LCD_DISPLAY_MSG_MAX_LENGTH];  
-	lcd.clear();
-	switch(u8MsgType) {
-	case eAWLC_ALERT_MSG:
-		lcd.setCursor ( 0, 0 );
-		lcd.print(AWLC_ALERT_MSG_TAG);
-		lcd.setCursor ( AWLC_LDC_MSG_POSITION, 0 );
-		lcd.print(awlcLcdMessages[u8MsgId]);
-		awlcPrintf("Unkown");
-	break;
-	case eAWLC_STATUS_MSG:
-		lcd.setCursor ( 0, 0 );
-		lcd.print(AWLC_STATUS_MSG_TAG);
-		lcd.setCursor ( AWLC_LDC_MSG_POSITION, 0 );
-		lcd.print(awlcLcdMessages[u8MsgId]);
-		awlcPrintf("Unkown");
-	break;
-	default:
-		awlcPrintf("Unkown");
-	break;
-	}  
-	return AWLC_SUCCESS;
 }

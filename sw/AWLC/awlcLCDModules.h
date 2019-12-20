@@ -36,47 +36,50 @@
  * Defines
  *====================
  **/
-#define 	AWLC_DEBUG_PRINT_ENABLE
+
 #define 	AWLC_LCD_DISPLAY_ROW_MAX_LENGTH				16
 #define		AWLC_LCD_DISPLAY_COLUMN_MAX_LENGTH			2
 #define		AWLC_LCD_DISPLAY_MSG_MAX_LENGTH				12
 #define		AWLC_LCD_DISPLAY_TANK_LEVEL_MAX_LENGTH		10
 #define 	AWLC_LDC_ALRT_MSG_LENGTH					AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
 #define 	AWLC_LDC_STATUS_MSG_LENGTH					AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
-#define 	AWLC_LDC_MSG_POSITION						AWLC_LCD_DISPLAY_ROW_MAX_LENGTH - AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
+#define 	AWLC_LDC_MSG_POSITION						AWLC_LCD_DISPLAY_MSG_MAX_LENGTH
+#define 	AWLC_LDC_SMT_LEVEL_POSITION					10
 #define		AWLC_ALERT_MSG_TAG							"ALT:"
 #define		AWLC_STATUS_MSG_TAG 						"MSG:"
 #define		AWLC_TANK_LEVEL_TAG							"LEVEL:"
-
-#define		AWLC_SERIAL_PRINT_BUF_MAX   				1024
+#define		AWLC_SMTANK_LEVEL_TAG						"SMT LEVEL:"
 //#define		AWLC_SERIAL_MAX_FILE_NAME_LEN					10
 //#define		AWLC_SERIAL_MAX_API_NAME_LEN					10
 //#define		AWLC_SERIAL_MAX_LINE_LEN						6
-#define		AWLC_BAUD_RATE								9600
 
 
 /**
  * AWLC messages
  * */
-#ifdef	MSG_ID
-#undef	MSG_ID
+#ifdef	LCD_MSG_ID
+#undef	LCD_MSG_ID
 #endif
-#define	MSG_ID(x) x,
+#define	LCD_MSG_ID(x) x,
 
-#define	AWLC_LCD_MSG_ID							\
-	MSG_ID( eAWLC_LCD_UNKNOWN_MSG_ID )			\
-	MSG_ID( eAWLC_LCD_EMPTY_TANK_MSG_ID )              \
-	MSG_ID( eAWLC_LCD_MOTOR_ON_MSG_ID )          	\
-	MSG_ID( eAWLC_LCD_MOTOR_OFF_MSG_ID )          	\
-	MSG_ID( eAWLC_LCD_DRY_RUN_MSG_ID )          	\
-	MSG_ID( eAWLC_LCD_MSG_TOTAL )          	\
+#define	AWLC_LCD_MSG_ID							    \
+	LCD_MSG_ID( eAWLC_LCD_UNKNOWN_MSG_ID )			\
+	LCD_MSG_ID( eAWLC_LCD_FULL_TANK )			\
+	LCD_MSG_ID( eAWLC_LCD_EMPTY_TANK )       \
+	LCD_MSG_ID( eAWLC_LCD_MOTOR_ON )         \
+	LCD_MSG_ID( eAWLC_LCD_MOTOR_OFF )        \
+	LCD_MSG_ID( eAWLC_LCD_DRYRUN )           \
+	LCD_MSG_ID( eAWLC_LCD_SUMP_EMPTY)		\
+	LCD_MSG_ID( eAWLC_LCD_SUMP_HALF)		\
+	LCD_MSG_ID( eAWLC_LCD_SUMP_FULL)		\
+	LCD_MSG_ID( eAWLC_LCD_MSG_TOTAL )          	    \
 
 typedef enum {
 	AWLC_LCD_MSG_ID
 } AWLC_EN_LCD_MSG_ID;
 
-#undef	MSG_ID
-#define	MSG_ID(x) #x,
+#undef	LCD_MSG_ID
+#define	LCD_MSG_ID(x) #x,
 
 const char * const astrLcdMsgIdNameMap[] = {AWLC_LCD_MSG_ID};
 #define awlcLcdMsgName(id) astrLcdMsgIdNameMap[id]
@@ -94,19 +97,13 @@ typedef enum AWLC_MESSAGE_TYPE {
 	eAWLC_UNKNOWN_MSG = 0,
 	eAWLC_ALERT_MSG,
 	eAWLC_STATUS_MSG,
-	eAWLC_TANK_LEVEL_MSG
+	eAWLC_SUMP_TANK_LEVEL_MSG,
+	eAWLC_SOURCE_TANK_LEVEL_MSG
 }AWLC_EN_LCD_MESSAGE_TYPES;
 
 
 const char * const astrLogLevelNameMap[] = {AWLC_LCD_MSG_ID};
 #define awlcLogLevelName(id) astrLogLevelNameMap[id]
-
-/**
- *======================
- * Structure 
- *======================
- **/
-
  
  /**
  *======================
@@ -114,12 +111,9 @@ const char * const astrLogLevelNameMap[] = {AWLC_LCD_MSG_ID};
  *======================
  */
 VOID awlcLcdInit();
-SINT32 awlcLcdPrint(UINT8 u8MsgType,UINT8 u8MsgId);
-SINT32 awlcLcdDisplayAlert();
-SINT32 awlcLcdDisplayMsg();
-SINT32 awlcLcdDisplayTankLevel();
-SINT32 awlcStatusLedBlink();
-VOID awlcSerialPrintInit();
-void awlcPrintf(const char	* ps8Fmt,...);
+SINT16 awlcLcdTask();
+SINT16 awlcLcdPrint(UINT8 u8MsgType,UINT8 u8MsgId);
+SINT16 awlcLcdDisplaySourceTankMsg();
+SINT16 awlcLcdDisplaySumpTankMsg();
 
 #endif
