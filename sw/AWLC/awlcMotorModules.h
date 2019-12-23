@@ -23,7 +23,7 @@
 #ifndef _AWLC_MOTOR_MODULES_H
 #define _AWLC_MOTOR_MODULES_H
 
-#include <awlcIncludes.h>
+#include <awlcCommonModules.h>
 /**
  *====================
  * Defines

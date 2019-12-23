@@ -29,7 +29,7 @@
  *====================
  **/
 
-#include <awlcIncludes.h>
+#include <awlcCommonModules.h>
  
  /**
  *====================
@@ -49,43 +49,6 @@
 #define		AWLC_STATUS_MSG_TAG 						"MSG:"
 #define		AWLC_TANK_LEVEL_TAG							"LEVEL:"
 #define		AWLC_SMTANK_LEVEL_TAG						"SMT LEVEL:"
-//#define		AWLC_SERIAL_MAX_FILE_NAME_LEN					10
-//#define		AWLC_SERIAL_MAX_API_NAME_LEN					10
-//#define		AWLC_SERIAL_MAX_LINE_LEN						6
-
-
-/**
- * AWLC messages
- * */
-#ifdef	LCD_MSG_ID
-#undef	LCD_MSG_ID
-#endif
-#define	LCD_MSG_ID(x) x,
-
-#define	AWLC_LCD_MSG_ID							    \
-	LCD_MSG_ID( eAWLC_LCD_UNKNOWN_MSG_ID )			\
-	LCD_MSG_ID( eAWLC_LCD_FULL_TANK )			\
-	LCD_MSG_ID( eAWLC_LCD_EMPTY_TANK )       \
-	LCD_MSG_ID( eAWLC_LCD_MOTOR_ON )         \
-	LCD_MSG_ID( eAWLC_LCD_MOTOR_OFF )        \
-	LCD_MSG_ID( eAWLC_LCD_DRYRUN )           \
-	LCD_MSG_ID( eAWLC_LCD_SUMP_EMPTY)		\
-	LCD_MSG_ID( eAWLC_LCD_SUMP_HALF)		\
-	LCD_MSG_ID( eAWLC_LCD_SUMP_FULL)		\
-	LCD_MSG_ID( eAWLC_LCD_MSG_TOTAL )          	    \
-
-typedef enum {
-	AWLC_LCD_MSG_ID
-} AWLC_EN_LCD_MSG_ID;
-
-#undef	LCD_MSG_ID
-#define	LCD_MSG_ID(x) #x,
-
-const char * const astrLcdMsgIdNameMap[] = {AWLC_LCD_MSG_ID};
-#define awlcLcdMsgName(id) astrLcdMsgIdNameMap[id]
-/**
- * AWLC messages end
- * */
 
 /**
  *======================
@@ -101,19 +64,34 @@ typedef enum AWLC_MESSAGE_TYPE {
 	eAWLC_SOURCE_TANK_LEVEL_MSG
 }AWLC_EN_LCD_MESSAGE_TYPES;
 
+/** AWLC display msg **/
+typedef enum {
+	eAWLC_LCD_UNKNOWN_MSG_ID=0,
+	eAWLC_LCD_FULL_TANK,
+	eAWLC_LCD_EMPTY_TANK,
+	eAWLC_LCD_MOTOR_ON,
+	eAWLC_LCD_MOTOR_OFF,
+	eAWLC_LCD_DRYRUN,
+	eAWLC_LCD_SUMP_EMPTY,
+	eAWLC_LCD_SUMP_HALF,
+	eAWLC_LCD_SUMP_FULL,
+	eAWLC_LCD_MSG_TOTAL,
+}AWLC_EN_LCD_MSG_ID;
 
-const char * const astrLogLevelNameMap[] = {AWLC_LCD_MSG_ID};
-#define awlcLogLevelName(id) astrLogLevelNameMap[id]
- 
  /**
  *======================
  * Function Declaration
  *======================
  */
+ /** lcd task init **/
 VOID awlcLcdInit();
+/** lcd task **/
 SINT16 awlcLcdTask();
+/** lcd print msg **/
 SINT16 awlcLcdPrint(UINT8 u8MsgType,UINT8 u8MsgId);
+/** lcd print source tank msg **/
 SINT16 awlcLcdDisplaySourceTankMsg();
+/** lcd print sump tank msg **/
 SINT16 awlcLcdDisplaySumpTankMsg();
 
 #endif

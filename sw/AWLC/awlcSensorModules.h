@@ -23,32 +23,31 @@
  
 #ifndef _AWLC_SENSOR_MODULES_H_
 #define	_AWLC_SENSOR_MODULES_H_
-#include <awlcIncludes.h>
-#include <awlcLCDModules.h>
+#include <awlcCommonModules.h>
 
 /**
  *====================
  * Defines
  *====================
  **/
- /*
-#define			AWLC_DIGITAL_PIN_13			13
-#define			AWLC_DIGITAL_PIN_12			12
-#define			AWLC_DIGITAL_PIN_11			11
-#define			AWLC_DIGITAL_PIN_10			10
-#define			AWLC_DIGITAL_PIN_9			9
-#define			AWLC_DIGITAL_PIN_8			8
-#define			AWLC_DIGITAL_PIN_7			7
-#define			AWLC_DIGITAL_PIN_6			6
-#define			AWLC_DIGITAL_PIN_5			5
-#define			AWLC_DIGITAL_PIN_4			4
-#define			AWLC_DIGITAL_PIN_3			3
-*/
+
+#define			AWLC_DIGITAL_PIN_13			13		// Sump tank sensor level    : Full
+#define			AWLC_DIGITAL_PIN_12			12		// Sump tank sensor level    : Half
+#define			AWLC_DIGITAL_PIN_11			11		// Sump tank sensor level    : Empty
+#define			AWLC_DIGITAL_PIN_10			10		// Source tank sensor level  : Full
+#define			AWLC_DIGITAL_PIN_9			9		// Source tank sensor level  : Empty
+#define			AWLC_DIGITAL_PIN_8			8		// Dry run sensor
+#define			AWLC_DIGITAL_PIN_7			7		// Source tank sensor level  : L1
+#define			AWLC_DIGITAL_PIN_6			6		// Source tank sensor level  : L2
+#define			AWLC_DIGITAL_PIN_5			5		// Source tank sensor level  : L3
+#define			AWLC_DIGITAL_PIN_4			4		// Source tank sensor level  : L4
+#define			AWLC_DIGITAL_PIN_3			3		// Source tank sensor level  : L5
 #define			AWLC_TOTAL_SENSOR_PINS		11
 /**
  * AWLC sensor pins
  */
 #pragma pack(1)
+
 #if 0
 typedef enum {
 	eAWLC_SUMP_TANK_SENSOR_FULL_PIN=0,       // PIN 13
@@ -64,7 +63,6 @@ typedef enum {
 	eAWLC_SOURCE_TANK_SENSOR_LEVEL_5_PIN,    // PIN 3
 	eAWLC_TOTAL_SENSOR_PIN
 } AWLC_EN_TANK_SENSOR_PIN_ID;
-#endif
 typedef union {
 	UINT16 u16SensorValues;
 	typedef struct {
@@ -82,6 +80,13 @@ typedef union {
 	}SENSOR_PIN;
 	SENSOR_PIN pin;
 }AWLC_SENSOR_PIN_VALUES;
+#endif
+
+typedef struct {
+	UINT8 u8SensorPinNo;
+	UINT8 u8SensorPinValue;
+}AWLC_SENSOR_VALUES;
+
 #pragma pack(0)
 /**
  *======================
@@ -93,5 +98,5 @@ SINT16 awlcSensorTask();
 SINT16 awlcReadSensorValues();
 SINT16 awlcWriteStatusTag();
 SINT16 awlcReadStatusTag();
-
+SINT8  awlcDryrunStatusCheck();
 #endif

@@ -1,14 +1,10 @@
-#include <awlcIncludes.h>
+#include <awlcCommonModules.h>
 #include <awlcSensorModules.h>
 #include <awlcTypes.h>
 #include <awlcMotorModules.h>
 #include <awlcLCDModules.h>
 
-
-
-//extern const char * awlcLcdMessages[eAWLC_LCD_MSG_TOTAL];
 unsigned long previousMillis=0;
-unsigned long intervel=500;
 
 void setup() {
   awlcSerialPrintInit();
@@ -19,12 +15,11 @@ void setup() {
 }
 void loop() {
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= intervel) {
+  if (currentMillis - previousMillis >= AWLC_MAIN_LOOP_INTERVEL) {
     awlcStatusLedBlink();
-    //awlcPrintf("%d",intervel);
     previousMillis = currentMillis;
-   // awlcSensorTask();
-  //  awlcLcdTask();
+    awlcSensorTask();
+    awlcLcdTask();
     //awlcMotorTask();
   }
 }

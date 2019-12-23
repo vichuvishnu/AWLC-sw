@@ -21,13 +21,15 @@
  * 
  */
  
- #include <awlcIncludes.h>
+ #include <awlcCommonModules.h>
  
 UINT8 gu8StatusLedBlink;
  
  void awlcSerialPrintInit()
 {
+#ifdef AWLC_DEBUG_PRINT_ENABLE
 	Serial.begin(AWLC_BAUD_RATE);
+#endif
 }
 
 void awlcStatusLedInit()
