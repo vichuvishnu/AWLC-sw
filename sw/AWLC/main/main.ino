@@ -8,9 +8,10 @@ unsigned long previousMillis=0;
 
 void setup() {
   awlcSerialPrintInit();
+  awlcLcdInit();
+  awlcBootAnimation();
   awlcStatusLedInit();
   awlcSensorInit();
-  awlcLcdInit();
   awlcMotorInit();
 }
 void loop() {
@@ -20,6 +21,6 @@ void loop() {
     previousMillis = currentMillis;
     awlcSensorTask();
     awlcLcdTask();
-    //awlcMotorTask();
+    awlcMotorTask();
   }
 }

@@ -102,8 +102,9 @@ SINT16 awlcWriteStatusTag()
 		gu8SumpTankStatus=eAWLC_SUMP_EMPTY;
 	}
 	
-	// Check motor status
+	// Check source tank status
 	if(gstrSensorPinData[AWLC_DIGITAL_PIN_9].u8SensorPinValue == AWLC_WATER_ABSENCE) {
+		gu8SourceTankStatus=eAWLC_SOURCE_EMPTY;//tank is empty
 		if(gu8SumpTankStatus != eAWLC_SUMP_EMPTY){
 			awlcPrintf("MOTOR is ON");
 			gu8MotorStatus=AWLC_MOTOR_ON;
@@ -112,13 +113,16 @@ SINT16 awlcWriteStatusTag()
 			awlcPrintf("MOTOR is OFF");
 			gu8MotorStatus=AWLC_MOTOR_OFF;
 		}
-		if(gstrSensorPinData[AWLC_DIGITAL_PIN_9].u8SensorPinValue == AWLC_WATER_PRESENCE){
+		if(gstrSensorPinData[AWLC_DIGITAL_PIN_10].u8SensorPinValue == AWLC_WATER_PRESENCE){
 			awlcPrintf("MOTOR is OFF");
-			gu8MotorStatus=AWLC_MOTOR_OFF;			
+			gu8MotorStatus=AWLC_MOTOR_OFF;	
+			gu8SourceTankStatus=eAWLC_SOURCE_FULL;		
 		}
 	}
-	
-	// Check
+	//Tank is full
+	if(gstrSensorPinData[AWLC_DIGITAL_PIN_10].u8SensorPinValue == AWLC_WATER_PRESENCE) {
+		gu8SourceTankStatus=eAWLC_SOURCE_FULL;
+	}
 }
 /*
  * Sensor task

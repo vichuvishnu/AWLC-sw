@@ -87,6 +87,8 @@ typedef enum {
 VOID awlcLcdInit();
 /** lcd task **/
 SINT16 awlcLcdTask();
+/** awlc Boot Animation **/
+VOID awlcBootAnimation();
 /** lcd print msg **/
 SINT16 awlcLcdPrint(UINT8 u8MsgType,UINT8 u8MsgId);
 /** lcd print source tank msg **/

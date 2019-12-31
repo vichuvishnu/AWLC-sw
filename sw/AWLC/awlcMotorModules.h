@@ -37,13 +37,11 @@
  */
 void awlcMotorInit();
 /* to turn on the motor */
-UINT32 awlcMotorOn();
+UINT16 awlcMotorOn();
 /* to turn off the motor */
-UINT32 awlcMotorOff();
+UINT16 awlcMotorOff();
 /* to read motor status */
-UINT32 awlcReadMotorStatus();
-/* to write motor status */
-UINT32 awlcWriteMotorStatus();
+UINT16 awlcReadMotorStatus();
 /* main task of motor */
-UINT32 awlcMotorTask();
+UINT16 awlcMotorTask();
 #endif

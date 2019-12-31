@@ -125,7 +125,27 @@ SINT16 awlcLcdDisplaySumpTankMsg()
 		break;
 	}
 }
-
+VOID awlcBootAnimation()
+{
+	lcd.clear();
+	lcd.setCursor ( 0, 0 );
+	lcd.print("AWLC Software");
+	lcd.setCursor ( 0, 1 );
+	lcd.print("Initializing.");
+	delay(255);
+	lcd.setCursor ( 0, 1 );
+	lcd.print("Initializing..");
+	delay(255);
+	lcd.setCursor ( 0, 1 );
+	lcd.print("Initializing...");
+	delay(255);
+	lcd.setCursor ( 0, 1 );
+	lcd.print("Initializing....");
+	delay(255);
+	lcd.setCursor ( 0, 1 );
+	lcd.print("Initializing.....");
+	delay(255);
+}
 SINT16 awlcLcdTask()
 {
 	awlcLcdDisplaySumpTankMsg();
